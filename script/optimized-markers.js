@@ -117,8 +117,14 @@ function showPoiInSidePanel(poiData) {
     
     // Créer le contenu du POI
     let content = `<div class="poi-detail">`;
-    const fondationUrl = poiData.fondation_courant || poiData.patrimoine_encours;
-    content += `<h3>${poiData.nom}${fondationUrl ? `<a href="${fondationUrl}" target="_blank" title="Voir sur le site de la Fondation du Patrimoine"><img src="image/fondation.jpg" alt="Fondation" style="float: right; height: 30px; margin-left: 10px;"></a>` : ''}</h3>`;
+    let logoHtml = '';
+    if (poiData.patrimoine_encours) {
+        logoHtml += `<a href="${poiData.patrimoine_encours}" target="_blank" title="Voir sur le site de la Fondation du Patrimoine"><img src="image/fond_black.png" alt="Fondation" style="float: left; height: 30px; margin-right: 10px;"></a>`;
+    }
+    if (poiData.fondation_courant) {
+        logoHtml += `<a href="${poiData.fondation_courant}" target="_blank" title="Voir sur le site de la Fondation du Patrimoine"><img src="image/fondation.jpg" alt="Fondation" style="float: right; height: 30px; margin-left: 10px;"></a>`;
+    }
+    content += `<h3 style="text-align: center;">${logoHtml}${poiData.nom}</h3>`;
     
     if (poiData.photo) {
         content += `<img src="${poiData.photo}" alt="${poiData.nom}" class="poi-detail-image popup-thumbnail" 

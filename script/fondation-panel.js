@@ -20,8 +20,14 @@ function loadFondationPOIs() {
         const properties = feature.properties;
         
         // Déterminer le statut du projet
-        const projetStatut = properties.patrimoine_encours ? 'Projet en cours' : 'Projet terminé';
-        const statutClass = properties.patrimoine_encours ? 'projet-encours' : 'projet-termine';
+        let projetStatut;
+        if (properties.patrimoine_encours && properties.fondation_courant) {
+            projetStatut = 'Un projet en cours et un ou des projets déjà réalisés';
+        } else if (properties.patrimoine_encours) {
+            projetStatut = 'Projet en cours';
+        } else {
+            projetStatut = 'Projet terminé';
+        }
         
         // Création de la carte
         const card = document.createElement('div');
