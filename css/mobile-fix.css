@@ -113,6 +113,21 @@
   #explorer-panel input[type="checkbox"] {
     accent-color: #626461 !important;
   }
+  
+  /* Adaptation du logo fondation pour mobile */
+  .fondation-header-logo {
+    height: 30px !important;
+    line-height: 1 !important;
+  }
+  
+  .fondation-header-content h2 {
+    font-size: 1rem !important;
+    line-height: 1.2 !important;
+  }
+  
+  .side-panel-header {
+    min-height: 50px !important;
+  }
 }
 
 /* Tablettes - Largeur limitée pour les panneaux */
@@ -131,6 +146,21 @@
   .page-title h1 {
     font-size: 1.5rem !important;
   }
+  
+  /* Adaptation du logo fondation pour tablettes */
+  .fondation-header-logo {
+    height: 35px !important;
+    line-height: 1 !important;
+  }
+  
+  .fondation-header-content h2 {
+    font-size: 1.1rem !important;
+    line-height: 1.2 !important;
+  }
+  
+  .side-panel-header {
+    min-height: 55px !important;
+  }
 }
 
 /* Téléphones portrait */
@@ -138,6 +168,21 @@
   .page-title h1 {
     font-size: 1rem !important;
     line-height: 1.1 !important;
+  }
+  
+  /* Adaptation du logo fondation pour téléphones */
+  .fondation-header-logo {
+    height: 25px !important;
+    line-height: 1 !important;
+  }
+  
+  .fondation-header-content h2 {
+    font-size: 0.9rem !important;
+    line-height: 1.2 !important;
+  }
+  
+  .side-panel-header {
+    min-height: 45px !important;
   }
 }
 

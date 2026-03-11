@@ -24,11 +24,40 @@
     justify-content: space-between;
     align-items: center;
     flex-shrink: 0;
+    min-height: 60px;
 }
 
 .side-panel-header h2 {
     margin: 0;
     font-family: 'Cinzel', serif;
+    line-height: 1;
+}
+
+.fondation-header-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    justify-content: flex-start;
+    height: 100%;
+}
+
+.fondation-header-logo {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+    flex-shrink: 0;
+    display: block;
+    line-height: 1;
+}
+
+.fondation-header-content h2 {
+    margin: 0;
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    line-height: 1.2;
+    display: flex;
+    align-items: center;
 }
 
 .close-side-panel, .close-fondation-panel, .close-explorer-panel {

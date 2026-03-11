@@ -31,16 +31,13 @@
   
   /* Fond gris pour les groupes de filtres */
   #explorer-panel .filter-group {
-    background: rgba(128, 128, 118, 0.75) !important;
+    background: rgba(128, 128, 118, 0.25) !important;
   }
   
-  /* Fond gris pour tout le panneau mobile */
-  #explorer-panel {
-    background: rgba(128, 128, 118, 0.75) !important;
-  }
+  
   
   #explorer-panel .explorer-content {
-    background: rgba(128, 128, 118, 0.75) !important;
+    background: rgba(128, 128, 118, 0.25) !important;
   }
   
   /* Fond gris pour la liste POI du panneau fondation */

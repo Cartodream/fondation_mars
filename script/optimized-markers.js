@@ -159,6 +159,10 @@ function showPoiInSidePanel(poiData) {
         content += `<p><a href="${poiData.site_web}" target="_blank">Plus d'informations</a></p>`;
     }
     
+    if (poiData.Latitude && poiData.Longitude) {
+        content += `<p><i>Itinéraire : <a href="https://www.google.com/maps/dir//${poiData.Latitude},${poiData.Longitude}" target="_blank">cliquez-ici</a></i></p>`;
+    }
+    
     content += `</div>`;
     
     // Remplacer le contenu du volet

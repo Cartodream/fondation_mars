@@ -105,7 +105,24 @@
                             <label><input type="checkbox" data-category="patrimoine_memoriel" data-subcategory="lieux_de_mémoire"><span> Lieux de Mémoire</span></label>
                         </div>
                     </div>
-                    
+                     <div class="filter-group">
+                        <h3 class="filter-title">Patrimoine Gastronomique</h3>
+                        <div class="filter-options" style="display: none;">
+                            <label><input type="checkbox" data-category="patrimoine_gastronomique" data-subcategory="artisan_de_bouche"><span> Artisan de Bouche</span></label>
+                            <label><input type="checkbox" data-category="patrimoine_gastronomique" data-subcategory="cuisine_locale"><span> Cuisine Locale</span></label>
+                            <label><input type="checkbox" data-category="patrimoine_gastronomique" data-subcategory="ferme_producteur"><span> Ferme Producteur</span></label>
+                            <label><input type="checkbox" data-category="patrimoine_gastronomique" data-subcategory="pisciculture"><span> Pisciculture</span></label>
+                            <label><input type="checkbox" data-category="patrimoine_gastronomique" data-subcategory="artisan_confiturier"><span> Artisan Confiturier</span></label>
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <h3 class="filter-title">Patrimoine Industriel</h3>
+                        <div class="filter-options" style="display: none;">
+                            <label><input type="checkbox" data-category="patrimoine_industriel" data-subcategory="usine"><span> Usines</span></label>
+                            <label><input type="checkbox" data-category="patrimoine_industriel" data-subcategory="aqueduc"><span> Aqueduc</span></label>
+                            
+                        </div>
+                    </div>
                     <div class="filter-group">
                         <h3 class="filter-title">Autres Points</h3>
                         <div class="filter-options" style="display: none;">
@@ -126,8 +143,8 @@
                 
                 <!-- Contrôles en bas à droite de la carte -->
                 <div class="map-controls">
-                    <button class="map-control-btn mobile-explorer-btn" title="Explorer" id="toggle-explorer-btn">
-                        <i class="fas fa-compass"></i>
+                    <button class="map-control-btn mobile-explorer-btn" title="Filtres" id="toggle-explorer-btn">
+                        <i class="fas fa-filter"></i>
                     </button>
                     <button class="map-control-btn" title="Liste" id="toggle-list-btn">
                         <i class="fas fa-list"></i>
@@ -180,7 +197,24 @@
                     <label><input type="checkbox" data-category="patrimoine_memoriel" data-subcategory="lieux_de_mémoire"><span> Lieux de Mémoire</span></label>
                 </div>
             </div>
-            
+            <div class="filter-group">
+                <h3 class="filter-title">Patrimoine Gastronomique</h3>
+                <div class="filter-options" style="display: none;">
+                    <label><input type="checkbox" data-category="patrimoine_gastronomique" data-subcategory="artisan_de_bouche"><span> Artisan de Bouche</span></label>
+                            <label><input type="checkbox" data-category="patrimoine_gastronomique" data-subcategory="cuisine_locale"><span> Cuisine Locale</span></label>
+                            <label><input type="checkbox" data-category="patrimoine_gastronomique" data-subcategory="ferme_producteur"><span> Ferme Producteur</span></label>
+                            <label><input type="checkbox" data-category="patrimoine_gastronomique" data-subcategory="pisciculture"><span> Pisciculture</span></label>
+                            <label><input type="checkbox" data-category="patrimoine_gastronomique" data-subcategory="artisan_confiturier"><span> Artisan Confiturier</span></label>
+                </div>
+            </div>
+             <div class="filter-group">
+                        <h3 class="filter-title">Patrimoine Industriel</h3>
+                        <div class="filter-options" style="display: none;">
+                            <label><input type="checkbox" data-category="patrimoine_industriel" data-subcategory="usine"><span> Usines</span></label>
+                            <label><input type="checkbox" data-category="patrimoine_industriel" data-subcategory="aqueduc"><span> Aqueduc</span></label>
+                            
+                        </div>
+                    </div>
             <div class="filter-group">
                 <h3 class="filter-title">Autres Points</h3>
                 <div class="filter-options" style="display: none;">
@@ -209,11 +243,16 @@
     <!-- Panneau latéral pour la fondation -->
     <div class="side-panel" id="fondation-panel">
         <div class="side-panel-header">
-            <h2>Fondation du Patrimoine</h2>
+            <div class="fondation-header-content">
+                <a href="https://www.fondation-patrimoine.org/" target="_blank" rel="noopener noreferrer">
+                    <img src="image/fondation.jpg" alt="Fondation du Patrimoine" class="fondation-header-logo">
+                </a>
+                <h2>Fondation du Patrimoine</h2>
+            </div>
             <button class="close-fondation-panel"></button>
         </div>
         <div class="fondation-content">
-            <p>La Fondation du Patrimoine aide à financer les restaurations du patrimoine français (publics/privés). Notre carte repère ses actions locales. Son logo sur certains points d’intérêt distingue projets en cours ou achevés ; un lien donne le détail des actions conduites.</p>
+            <p>La Fondation du Patrimoine aide à financer les restaurations du patrimoine français (publics/privés). Notre carte repère ses actions locales pour le Patrimoine public. Son logo sur certains points d’intérêt distingue projets en cours ou achevés ; un lien donne le détail des actions conduites.</p>
         </div>
         <div class="fondation-poi-list" id="fondation-poi-list">
             <!-- Les POIs avec fondation_courant seront générés ici -->

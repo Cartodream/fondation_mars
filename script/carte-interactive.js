@@ -146,6 +146,8 @@ function mapToFilterCategory(category) {
         'Patrimoine Architectural': 'patrimoine_architectural',
         'Patrimoine Naturel': 'patrimoine_naturel',
         'Patrimoine Mémoriel': 'patrimoine_memoriel',
+        'Patrimoine Gastronomique': 'patrimoine_gastronomique',
+        'Patrimoine Industriel': 'patrimoine_industriel',
         'Autres Points': 'autres_points',
     };
     
@@ -174,6 +176,13 @@ function mapToFilterSubcategory(subcategory) {
         'Musées': 'musées',
         'Lieux de Mémoire': 'lieux_de_mémoire',
         'Curiosité': 'curiosité',
+        'Artisan de Bouche': 'artisan_de_bouche',
+        'Cuisine Locale': 'cuisine_locale',
+        'Ferme Producteur': 'ferme_producteur',
+        'Pisciculture': 'pisciculture',
+        'Artisan Confiturier': 'artisan_confiturier',
+        'Usine': 'usine',
+        'Aqueduc': 'aqueduc'
     };
     
     return subcategoryMap[subcategory] || subcategory.toLowerCase().replace(/ /g, '_');
@@ -204,6 +213,17 @@ function initFilters() {
             'personnages_célèbres': false,
             'musées': false,
             'lieux_de_mémoire': false
+        },
+        'patrimoine_gastronomique': {
+            'artisan_de_bouche': false,
+            'cuisine_locale': false,
+            'ferme_producteur': false,
+            'pisciculture': false,
+            'artisan_confiturier': false
+        },
+        'patrimoine_industriel': {
+            'usine': false,
+            'aqueduc': false
         },
         'autres_points': {
             'curiosité': false
