@@ -1,4 +1,6 @@
 // Script pour afficher les détails des POIs dans le panneau latéral au lieu des popups
+let currentPoiData = null;
+
 document.addEventListener('DOMContentLoaded', function() {
     // Référence au panneau latéral et à la liste des POIs
     const sidePanel = document.getElementById('side-panel');
@@ -6,6 +8,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Fonction pour afficher les détails d'un POI dans le panneau latéral
     window.showPoiDetails = function(properties) {
+        // Sauvegarder les données du POI actuellement affiché
+        currentPoiData = properties;
         // Masquer les couches des bassins si elles sont visibles
         if (window.bassinVaucouleursLayer && map.hasLayer(window.bassinVaucouleursLayer)) {
             map.removeLayer(window.bassinVaucouleursLayer);
@@ -48,8 +52,23 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Description (en dessous de l'image)
         detailContent += `<div class="poi-detail-text">`;
-        if (properties.descriptif) {
-            detailContent += `<p>${properties.descriptif}</p>`;
+        const currentLanguage = localStorage.getItem('language') || 'fr';
+        let description = '';
+        
+        console.log('Langue actuelle:', currentLanguage);
+        console.log('trad_des disponible:', properties.trad_des);
+        console.log('descriptif disponible:', properties.descriptif);
+        
+        if (currentLanguage === 'en' && properties.trad_des) {
+            description = properties.trad_des;
+            console.log('Utilisation de trad_des');
+        } else if (properties.descriptif) {
+            description = properties.descriptif;
+            console.log('Utilisation de descriptif');
+        }
+        
+        if (description) {
+            detailContent += `<p>${description}</p>`;
         } else {
             detailContent += `<p>Aucune description disponible.</p>`;
         }
@@ -104,4 +123,18 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     };
+    
+    // Créer un alias pour la compatibilité
+    window.showPoiInSidePanel = window.showPoiDetails;
+    
+    // Écouter les changements de langue
+    window.addEventListener('languageChanged', function(e) {
+        console.log('Événement languageChanged reçu:', e.detail);
+        console.log('currentPoiData:', currentPoiData);
+        // Si un POI est actuellement affiché, le rafraîchir
+        if (currentPoiData) {
+            console.log('Rafraîchissement du POI');
+            window.showPoiDetails(currentPoiData);
+        }
+    });
 });

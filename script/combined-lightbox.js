@@ -89,4 +89,33 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
+    
+    // Support tactile pour mobile (swipe)
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    modalImg.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+    
+    modalImg.addEventListener('touchend', function(e) {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    }, { passive: true });
+    
+    function handleSwipe() {
+        const swipeThreshold = 50; // Distance minimale pour détecter un swipe
+        
+        if (slideImages.length <= 1) return;
+        
+        if (touchEndX < touchStartX - swipeThreshold) {
+            // Swipe vers la gauche - image suivante
+            nextButton.click();
+        }
+        
+        if (touchEndX > touchStartX + swipeThreshold) {
+            // Swipe vers la droite - image précédente
+            prevButton.click();
+        }
+    }
 });

@@ -1,3 +1,6 @@
+// Variable globale pour tracker le marqueur sélectionné
+let currentSelectedMarker = null;
+
 // Fonction optimisée pour créer les marqueurs
 function createOptimizedMarkers() {
     // Créer un cache pour les icônes
@@ -53,28 +56,45 @@ function createOptimizedMarkers() {
         } else {
             // Ajouter un gestionnaire d'événements pour créer la popup à la demande
             marker.on('click', function(e) {
+                // Restaurer l'icône du marqueur précédemment sélectionné
+                if (currentSelectedMarker && currentSelectedMarker !== this) {
+                    const prevIconName = normalizeString(currentSelectedMarker.poiData.sous_cat);
+                    let prevIconUrl = `image/${prevIconName}.png`;
+                    if (prevIconName === 'apiculteur') {
+                        prevIconUrl = `image/apiculteur_V3.svg`;
+                    } else if (prevIconName === 'forets_et_parcs') {
+                        prevIconUrl = `image/arbre_V01.svg`;
+                    }
+                    currentSelectedMarker.setIcon(L.icon({
+                        iconUrl: prevIconUrl,
+                        iconSize: [25, 25],
+                        iconAnchor: [12, 12],
+                        popupAnchor: [15, 0]
+                    }));
+                }
+                
+                // Supprimer l'effet des autres marqueurs
+                document.querySelectorAll('.marker-active').forEach(el => {
+                    el.classList.remove('marker-active');
+                });
+                
                 // Effet sur l'icône
                 const iconElement = this.getElement();
                 if (iconElement) {
                     iconElement.classList.add('marker-active');
                     
-                    // Cas spécial pour forêts et parcs : changer l'icône en rouge
-                    if (this.poiData.sous_cat === 'Forêts et Parcs') {
-                        this.setIcon(L.icon({
-                            iconUrl: `image/arbre_V01_rouge.svg`,
-                            iconSize: [25, 25],
-                            iconAnchor: [12, 12],
-                            popupAnchor: [15, 0]
-                        }));
-                    }
+                    // Changer l'icône en version violet pour tous les POI
+                    const iconName = normalizeString(this.poiData.sous_cat);
+                    this.setIcon(L.icon({
+                        iconUrl: `image/${iconName}_violet.svg`,
+                        iconSize: [25, 25],
+                        iconAnchor: [12, 12],
+                        popupAnchor: [15, 0]
+                    }));
                 }
                 
-                // Supprimer l'effet des autres marqueurs
-                document.querySelectorAll('.marker-active').forEach(el => {
-                    if (el !== iconElement) {
-                        el.classList.remove('marker-active');
-                    }
-                });
+                // Mettre à jour le marqueur sélectionné
+                currentSelectedMarker = this;
                 
                 // Afficher dans le volet droit
                 showPoiInSidePanel(this.poiData);
@@ -107,13 +127,19 @@ function createOptimizedMarkers() {
 }
 
 // Fonction pour afficher un POI dans le volet droit
+let currentPoiData = null;
+
 function showPoiInSidePanel(poiData) {
+    // Sauvegarder les données du POI actuellement affiché
+    currentPoiData = poiData;
+    
     const sidePanel = document.getElementById('side-panel');
     const poiList = document.getElementById('poi-list');
     const panelHeader = sidePanel.querySelector('.side-panel-header h2');
     
     // Changer le titre
-    panelHeader.textContent = 'Point d\'Intérêt';
+    const currentLanguage = localStorage.getItem('language') || 'fr';
+    panelHeader.textContent = currentLanguage === 'en' ? 'Point of Interest' : 'Point d\'Intérêt';
     
     // Créer le contenu du POI
     let content = `<div class="poi-detail">`;
@@ -143,8 +169,27 @@ function showPoiInSidePanel(poiData) {
                      data-photo13="${poiData.photo13 || ''}">`;
     }
     
-    if (poiData.descriptif) {
-        content += `<p>${poiData.descriptif}</p>`;
+    // Gérer la description selon la langue
+    let description = '';
+    
+    console.log('=== DEBUG LANGUE ===');
+    console.log('currentLanguage:', currentLanguage);
+    console.log('poiData.trad_des:', poiData.trad_des);
+    console.log('poiData.descriptif:', poiData.descriptif);
+    
+    if (currentLanguage === 'en' && poiData.trad_des) {
+        description = poiData.trad_des;
+        console.log('Utilisation de trad_des (EN)');
+    } else if (poiData.descriptif) {
+        description = poiData.descriptif;
+        console.log('Utilisation de descriptif (FR)');
+    }
+    
+    console.log('Description finale:', description);
+    console.log('===================')
+    
+    if (description) {
+        content += `<p>${description}</p>`;
     }
     
     if (poiData.tel) {
@@ -156,11 +201,14 @@ function showPoiInSidePanel(poiData) {
     }
     
     if (poiData.site_web) {
-        content += `<p><a href="${poiData.site_web}" target="_blank">Plus d'informations</a></p>`;
+        const moreInfoText = currentLanguage === 'en' ? 'More information' : 'Plus d\'informations';
+        content += `<p><a href="${poiData.site_web}" target="_blank">${moreInfoText}</a></p>`;
     }
     
     if (poiData.Latitude && poiData.Longitude) {
-        content += `<p><i>Itinéraire : <a href="https://www.google.com/maps/dir//${poiData.Latitude},${poiData.Longitude}" target="_blank">cliquez-ici</a></i></p>`;
+        const itineraryText = currentLanguage === 'en' ? 'Itinerary' : 'Itinéraire';
+        const clickHereText = currentLanguage === 'en' ? 'click here' : 'cliquez-ici';
+        content += `<p><i>${itineraryText} : <a href="https://www.google.com/maps/dir//${poiData.Latitude},${poiData.Longitude}" target="_blank">${clickHereText}</a></i></p>`;
     }
     
     content += `</div>`;
@@ -314,3 +362,10 @@ function setupBassinHandler(marker, bassinLayer) {
         }
     });
 }
+
+// Écouter les changements de langue pour rafraîchir le POI affiché
+window.addEventListener('languageChanged', function(e) {
+    if (currentPoiData) {
+        showPoiInSidePanel(currentPoiData);
+    }
+});

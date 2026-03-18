@@ -17,6 +17,23 @@ document.addEventListener('DOMContentLoaded', function() {
     // Fonction pour fermer le panneau
     closeSidePanel.addEventListener('click', function() {
         sidePanel.classList.remove('active');
+        // Restaurer l'icône du marqueur sélectionné
+        if (currentSelectedMarker) {
+            const iconName = normalizeString(currentSelectedMarker.poiData.sous_cat);
+            let iconUrl = `image/${iconName}.png`;
+            if (iconName === 'apiculteur') {
+                iconUrl = `image/apiculteur_V3.svg`;
+            } else if (iconName === 'forets_et_parcs') {
+                iconUrl = `image/arbre_V01.svg`;
+            }
+            currentSelectedMarker.setIcon(L.icon({
+                iconUrl: iconUrl,
+                iconSize: [25, 25],
+                iconAnchor: [12, 12],
+                popupAnchor: [15, 0]
+            }));
+            currentSelectedMarker = null;
+        }
         // Supprimer l'effet de toutes les icônes
         document.querySelectorAll('.marker-active').forEach(el => {
             el.classList.remove('marker-active');

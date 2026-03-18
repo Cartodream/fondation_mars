@@ -163,6 +163,8 @@ function mapToFilterSubcategory(subcategory) {
         'Etangs et Rivières': 'etangs_et_rivières',
         'Etangs': 'etangs_et_rivières',
         'Rivières': 'etangs_et_rivières',
+        'Vignes': 'vignes',
+        'Lieux Historiques': 'lieux_historiques',
         'Flore': 'flore',
         'Forêts et Parcs': 'forêts_et_parcs',
         'Rapace': 'rapace',
@@ -199,6 +201,7 @@ function initFilters() {
         },
         'patrimoine_naturel': {
             'etangs_et_rivières': false,
+            'vignes': false,
             'effraie': false,
             'chevêche': false,
             'flore': false,
@@ -212,7 +215,8 @@ function initFilters() {
         'patrimoine_memoriel': {
             'personnages_célèbres': false,
             'musées': false,
-            'lieux_de_mémoire': false
+            'lieux_de_mémoire': false,
+            'lieux_historiques': false
         },
         'patrimoine_gastronomique': {
             'artisan_de_bouche': false,
@@ -465,4 +469,36 @@ function deselectAllFilters() {
 document.addEventListener('DOMContentLoaded', function() {
     // Initialisation de la carte
     initMap();
+    
+    // Gestionnaire pour les clics sur la carte (dans le vide)
+    setTimeout(function() {
+        map.on('click', function(e) {
+            // Vérifier si on a cliqué sur un marqueur
+            if (e.target && e.target.tagName === 'IMG') {
+                return; // Ne rien faire si on clique sur un marqueur
+            }
+            
+            // Restaurer l'icône du marqueur sélectionné
+            if (currentSelectedMarker) {
+                const iconName = normalizeString(currentSelectedMarker.poiData.sous_cat);
+                let iconUrl = `image/${iconName}.png`;
+                if (iconName === 'apiculteur') {
+                    iconUrl = `image/apiculteur_V3.svg`;
+                } else if (iconName === 'forets_et_parcs') {
+                    iconUrl = `image/arbre_V01.svg`;
+                }
+                currentSelectedMarker.setIcon(L.icon({
+                    iconUrl: iconUrl,
+                    iconSize: [25, 25],
+                    iconAnchor: [12, 12],
+                    popupAnchor: [15, 0]
+                }));
+                currentSelectedMarker = null;
+            }
+            // Supprimer l'effet de toutes les icônes
+            document.querySelectorAll('.marker-active').forEach(el => {
+                el.classList.remove('marker-active');
+            });
+        });
+    }, 100);
 });
